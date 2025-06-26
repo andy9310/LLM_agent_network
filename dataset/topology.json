@@ -1,0 +1,6 @@
+{
+    "L1": {
+        "GigabitEthernet0/0/0/0":"10.1.1.1",
+        "GigabitEthernet0/0/0/3":"10.1.2.1"
+    }
+}
