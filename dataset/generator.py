@@ -15,8 +15,7 @@ from typing import Dict, List, Tuple
 json_path = Path("topology.json")
 with json_path.open(encoding="utf-8") as f:   # 建議加上 encoding
     data = json.load(f)
-
-LINK_TO_IF: Dict[str, str] = 
+print(data)
 REST_ROOT_FMT = ("http://{host}:{port}/restconf/operational/"
                  "network-topology:network-topology/topology/topology-netconf/"
                  "node/{node}/yang-ext:mount/Cisco-IOS-XR-ifmgr-cfg/"
@@ -52,7 +51,7 @@ def build_configs(links: List[str]) -> Dict[str, Dict]:
         }
     return cfgs
 
-def write_config_files(configs: Dict[str, Dict], out_dir: Path = Path(".")) -> List[Path]:
+def write_files(commands:List[str], configs: Dict[str, Dict], out_dir: Path = Path(".")) -> List[Path]:
     """把 config_<iface>.json 寫檔，回傳檔案路徑清單。"""
     out_dir.mkdir(parents=True, exist_ok=True)
     paths = []
@@ -72,3 +71,8 @@ def generate(links: List[str], **kwargs) -> Tuple[List[str], Dict[str, Dict]]:
     cmds = build_commands(links, **kwargs)
     cfgs = build_configs(links)
     return cmds, cfgs
+
+if __name__ == '__main__':
+    cmd, cfg = generate()
+    write_files(cmd, cfg)
+
